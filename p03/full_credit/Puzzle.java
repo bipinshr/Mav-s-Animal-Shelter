@@ -26,7 +26,7 @@ public class Puzzle
 	
 	}
 
-    public String compareGuess(String guess) {
+	public String compareGuess(String guess) {
         // For actual and check, letters will be replaced with spaces when found
         Word actual = new Word(solution.toString()); // Solution to the puzzle
         Word check = new Word(guess);                // Guess at the solution
@@ -61,6 +61,5 @@ public class Puzzle
         // Return the clue
         return result.toString();
     }
-
 
 }

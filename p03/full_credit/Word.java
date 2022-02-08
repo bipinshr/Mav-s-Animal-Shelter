@@ -3,8 +3,8 @@ public class Word
 {
     private char[] letters = new char[5];
     
-	public Word(String solution) {
-        this.letters = solution.toCharArray();
+	public Word(String word) {
+        this.letters = word.toCharArray();
     }
 	
 	public char charAt(int position) {
