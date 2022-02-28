@@ -17,7 +17,7 @@ abstract class Animal {
 	public abstract String breed();
 	
 	public String toString(){
-		return "" + name +" (" + age + " year old " + gender ;
+		return "" + name +" (" + age + " year old " + gender + ")" ;
 	}
 }
 
