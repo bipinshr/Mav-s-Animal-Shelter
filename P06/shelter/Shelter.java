@@ -16,7 +16,7 @@ public class Shelter{
 	@Override
 	public String toString(){
 		String result = "";
-		String seperator="";
+		String seperator=" ";
 		for (Animal a: animals) { 
                 result += seperator + a;
 				seperator= "\n";

@@ -22,6 +22,7 @@ public class Mass{
 		
 		System.out.print(s1);
 		*/
+		Shelter shelter = new Shelter("AnimalCompanions");
 		MainWin FirstTry = new MainWin("Try");
 		FirstTry.setVisible(true);
 	
