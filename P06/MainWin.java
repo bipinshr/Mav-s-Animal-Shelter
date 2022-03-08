@@ -7,6 +7,11 @@ import shelter.LizardBreed;
 import shelter.Gender;
 import java.awt.*;
 import javax.swing.*;
+import java.io.File;
+import java.io.IOException;
+import javax.swing.*;
+import javax.imageio.ImageIO;
+import java.awt.image.*;
 public class MainWin extends JFrame{
 	
 	private Shelter shelter = new Shelter("AnimalCompanions");
@@ -15,6 +20,7 @@ public class MainWin extends JFrame{
 	public MainWin(String title){
 		super(title);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		setSize(400,200);
 		
 		//------------ This is for menubar ----------- 
@@ -31,12 +37,12 @@ public class MainWin extends JFrame{
 		JMenu help = new JMenu("Help");
 		JMenuItem about = new JMenuItem("About");
 		
-		/*
+		
 		quit.addActionListener(event -> onQuitClick());
 		newdog.addActionListener(event -> onNewDogClick());
 		newlizard.addActionListener(event -> onNewLizardClick());
 		about.addActionListener(event -> onAboutClick());
-		*/
+		
 		
 		File.add(quit);
 		Animalmenu.add(newdog);
@@ -87,17 +93,14 @@ public class MainWin extends JFrame{
 		
 		box.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints(); // Specify cell for widgets
-        constraints.gridwidth = 1;   // 1 cell wide
-        constraints.gridheight = 1;  // 1 cell high
-        constraints.weightx = 1;     // Resize data controls in width as window resizes
-        constraints.weighty = 0;     // Do NOT resize in height as window resizes
-        constraints.insets = new Insets(2, 5, 2, 5);  // Pixel spacing above, left, below, and right
-        constraints.fill= GridBagConstraints.BOTH;    // Resize widget to fill the cell - options:
-            // NONE (the default), HORIZONTAL (width only), VERTICAL (height only), or BOTH
-        constraints.anchor = GridBagConstraints.LINE_START;  // Position widget center left in cell - options:
-            // FIRST_LINE_START   PAGE_START   FIRST_LINE_END
-            // LINE_START           CENTER	         LINE_END
-            // LAST_LINE_START     PAGE_END     LAST_LINE_END
+        constraints.gridwidth = 1;   
+        constraints.gridheight = 1;  
+        constraints.weightx = 1;     
+        constraints.weighty = 0;    
+        constraints.insets = new Insets(2, 5, 2, 5);  
+        constraints.fill= GridBagConstraints.BOTH;    
+        constraints.anchor = GridBagConstraints.LINE_START;  
+            
         
         // Configure GridBagLayout constraints for the left (labels) column
         GridBagConstraints constraintsLabel = (GridBagConstraints) constraints.clone(); // Duplicate constraints
@@ -112,7 +115,6 @@ public class MainWin extends JFrame{
 
         String[] options = {"Beagle", "Poodle", "Dobermann", "Bulldog", "Boxer", "Labrador", "Mastiff"};
         breeds = new JComboBox<String>(options);
-        //breeds.setEditable(true); // Allow custom types to be entered as well
         constraints.gridx = 1;
         constraints.gridy = 0;
         constraints.weighty = 0;
@@ -208,22 +210,19 @@ public class MainWin extends JFrame{
 		box.setSize(width,height);  
 		
 		box.setLayout(new GridBagLayout());
-        GridBagConstraints constraints = new GridBagConstraints(); // Specify cell for widgets
-        constraints.gridwidth = 1;   // 1 cell wide
-        constraints.gridheight = 1;  // 1 cell high
-        constraints.weightx = 1;     // Resize data controls in width as window resizes
-        constraints.weighty = 0;     // Do NOT resize in height as window resizes
-        constraints.insets = new Insets(2, 5, 2, 5);  // Pixel spacing above, left, below, and right
-        constraints.fill= GridBagConstraints.BOTH;    // Resize widget to fill the cell - options:
-            // NONE (the default), HORIZONTAL (width only), VERTICAL (height only), or BOTH
-        constraints.anchor = GridBagConstraints.LINE_START;  // Position widget center left in cell - options:
-            // FIRST_LINE_START   PAGE_START   FIRST_LINE_END
-            // LINE_START           CENTER	         LINE_END
-            // LAST_LINE_START     PAGE_END     LAST_LINE_END
+        GridBagConstraints constraints = new GridBagConstraints(); 
+        constraints.gridwidth = 1;   
+        constraints.gridheight = 1;  
+        constraints.weightx = 1;     
+        constraints.weighty = 0;     
+        constraints.insets = new Insets(2, 5, 2, 5);  
+        constraints.fill= GridBagConstraints.BOTH;    
+        constraints.anchor = GridBagConstraints.LINE_START;  
+           
         
-        // Configure GridBagLayout constraints for the left (labels) column
-        GridBagConstraints constraintsLabel = (GridBagConstraints) constraints.clone(); // Duplicate constraints
-        constraintsLabel.weightx = 0;  // Do NOT resize the label column in width as window resizes
+        
+        GridBagConstraints constraintsLabel = (GridBagConstraints) constraints.clone();
+        constraintsLabel.weightx = 0;  
         
         // ////////////////////////////////////
         // Breed of animal
@@ -311,6 +310,40 @@ public class MainWin extends JFrame{
         box.add(panel, constraints);
 		//pack();
         //setVisible(true);
+	}
+	
+	void onQuitClick(){
+		System.exit(0);
+	}
+	
+	void onAboutClick(){
+		JDialog box = new JDialog();
+		box.setTitle("Mav's Animal Shelter Software");
+		box.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		box.setLayout(new FlowLayout());
+		box.setSize(600,600);  
+		
+			try{
+			BufferedImage myPicture = ImageIO.read(new File("doglizard.png"));
+            JLabel logo = new JLabel(new ImageIcon(myPicture));
+			box.add(logo);
+			}catch(IOException e){}
+            
+		 JLabel text = new JLabel("<html>"
+          + "<p>Version 1.0</p>"
+          + "<p>Copyright 2022 by Bipin Shrestha</p>"
+          + "<p>Licensed under Gnu GPL 3.0</p>"
+          + "<p>Logo by xthedoctorx</p>"
+          + "<p><font size=-2>https://animals-riding-animals.tumblr.com/post/165220708256/lizard-riding-dog</font></p>"
+          + "<p>Dog icon by Openclipart, licensed under Public domain<p><font size=-2> <https://publicdomainvectors.org/en/free-clipart/Cartoon-dog-vector-image/12091.html></font></p>"
+		  + "<p>Lizard icon by webalys, licensed under licensed for personal</p>"
+		  + "<p>and commercial purposes with attribution<p><font size=-2> <https://publicdomainvectors.org/en/free-clipart/Cartoon-dog-vector-image/12091.html></font></p>"
+          + "<p><font size=-2>https://www.iconfinder.com/icons/4888173/lizard_icon</font></p>"
+          + "</html>");
+        
+        box.add(text);
+		box.setVisible(true);
+		
 	}
 	
 	void updateDisplay(){

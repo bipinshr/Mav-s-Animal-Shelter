@@ -22,8 +22,8 @@ public class Mass{
 		
 		System.out.print(s1);
 		*/
-		Shelter shelter = new Shelter("AnimalCompanions");
-		MainWin FirstTry = new MainWin("Try");
+		//Shelter shelter = new Shelter("AnimalCompanions");
+		MainWin FirstTry = new MainWin("Mav's Animal Shelter Software");
 		FirstTry.setVisible(true);
 	
 	
