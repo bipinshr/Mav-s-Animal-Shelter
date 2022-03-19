@@ -1,4 +1,7 @@
 package shelter;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
 public class Dog extends Animal{
 	private DogBreed breed;
 	
@@ -6,6 +9,16 @@ public class Dog extends Animal{
 		super(name,gender,age);
 		this.breed = breed;
 	}
+	
+	/*
+	public Dog(BufferReader br){
+		
+	}
+	
+	public void save(BufferedWriter bw){
+		
+	}
+	*/
 	
 	@Override 
 	public String family(){

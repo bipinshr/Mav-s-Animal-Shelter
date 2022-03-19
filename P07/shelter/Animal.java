@@ -1,4 +1,7 @@
 package shelter;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
 public abstract class Animal {
     
 	private String name;
@@ -13,6 +16,17 @@ public abstract class Animal {
 		this.gender = gender;
 		this.age = age;
 	}
+	
+	/*
+	public Animal(BufferReader br){
+		
+	}
+	
+	public void save(BufferedWriter bw){
+		
+	}
+	*/
+	
 	public abstract String family();
 	public abstract String breed();
 	public String name() {return name;}

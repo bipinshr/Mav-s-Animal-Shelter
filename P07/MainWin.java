@@ -12,6 +12,7 @@ import java.io.IOException;
 import javax.swing.*;
 import javax.imageio.ImageIO;
 import java.awt.image.*;
+import java.awt.Font;
 public class MainWin extends JFrame{
 	
 	private Shelter shelter = new Shelter("AnimalCompanions");
@@ -41,18 +42,22 @@ public class MainWin extends JFrame{
 		JMenu help = new JMenu("Help");
 		JMenuItem about = new JMenuItem("About");
 		
-		
+		newshelther.addActionListener(event -> onNewSheltherClick());
+		//openshelther.addActionListener(event -> onOpenSheltherClick());
+		//savehelther.addActionListener(event -> onSaveSheltherClick());
+		//saveasshelther.addActionListener(event -> onSaveSheltherAsClick());
 		quit.addActionListener(event -> onQuitClick());
 		newdog.addActionListener(event -> onNewDogClick());
 		newlizard.addActionListener(event -> onNewLizardClick());
 		about.addActionListener(event -> onAboutClick());
 		
 		
-		File.add(quit);
+		
 		File.add(newshelther);
 		File.add(openshelther);
 		File.add(saveshelther);
 		File.add(saveasshelther);
+		File.add(quit);
 		Animalmenu.add(newdog);
 		Animalmenu.add(newlizard);
 		help.add(about);
@@ -70,25 +75,25 @@ public class MainWin extends JFrame{
 		newfilebutton.setActionCommand("Create a new File");
 		newfilebutton.setToolTipText("Create a new File");
 		toolbar.add(newfilebutton);
-		//newfilebutton.addActionListener(event->onNewSheltherClick());
+		newfilebutton.addActionListener(event->onNewSheltherClick());
 		
 		JButton openfilebutton = new JButton(new ImageIcon("openfile.png"));
 		openfilebutton.setActionCommand("Open a File");
 		openfilebutton.setToolTipText("Open a File");
 		toolbar.add(openfilebutton);
-		//openfilebutton.addActionListener(event->onNewSheltherClick());
+		//openfilebutton.addActionListener(event->onOpenSheltherClick());
 		
 		JButton savefilebutton = new JButton(new ImageIcon("savefile.png"));
 		savefilebutton.setActionCommand("Save a File");
 		savefilebutton.setToolTipText("Save a File");
 		toolbar.add(savefilebutton);
-		//savefilebutton.addActionListener(event->onNewSheltherClick());
+		//savefilebutton.addActionListener(event->onSaveSheltherClick());
 		
 		JButton saveasfilebutton = new JButton(new ImageIcon("saveasfile.png"));
 		saveasfilebutton.setActionCommand("Save As a File");
 		saveasfilebutton.setToolTipText("Save As a file");
 		toolbar.add(saveasfilebutton);
-		//newfilebutton.addActionListener(event->onNewSheltherClick());
+		//newfilebutton.addActionListener(event->onSaveSheltherAsClick());
 		
 		JButton dogbutton = new JButton(new ImageIcon("dog.png"));
 		dogbutton.setActionCommand("Create a new dog");
@@ -373,7 +378,11 @@ public class MainWin extends JFrame{
 		  + "<p>Lizard icon by webalys, licensed under licensed for personal</p>"
 		  + "<p>and commercial purposes with attribution<p><font size=-2> <https://publicdomainvectors.org/en/free-clipart/Cartoon-dog-vector-image/12091.html></font></p>"
           + "<p><font size=-2>https://www.iconfinder.com/icons/4888173/lizard_icon</font></p>"
-          + "</html>");
+		  + "<p>New File icon by icon 8, licensed under Public domain<p><font size=-2> <https://www.iconsdb.com/white-icons/add-file-icon.html></font></p>"
+		  + "<p>Open File icon by icon 8, licensed under Public domain<p><font size=-2> <https://www.iconsdb.com/white-icons/open-in-browser-icon.html></font></p>"
+          + "<p>Save File icon by icon 8, licensed under Public domain<p><font size=-2> <https://www.iconsdb.com/blue-icons/save-icon.html></font></p>"
+		  + "<p>Save As File icon by icon 8, licensed under Public domain<p><font size=-2> <https://www.iconsdb.com/black-icons/save-as-icon.html></font></p>"
+		  + "</html>");
         
         box.add(text);
 		box.setVisible(true);
@@ -383,4 +392,11 @@ public class MainWin extends JFrame{
 	void updateDisplay(){
 		data.setText("<html>"+shelter.toString().replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll("\n","<br/>")+"</html>");
 	}
+	
+	void onNewSheltherClick(){
+		shelter = new Shelter("AnimalCompanions");
+		updateDisplay();
+        data.setFont(new JLabel().getFont());    // Reset to default font
+    }
+	
 }
