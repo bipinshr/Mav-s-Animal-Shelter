@@ -10,15 +10,18 @@ public class Dog extends Animal{
 		this.breed = breed;
 	}
 	
-	/*
-	public Dog(BufferReader br){
-		
+	
+	public Dog(BufferedReader br) throws IOException{
+		super(br);
+		breed = DogBreed.valueOf(br.readLine()); 
 	}
 	
-	public void save(BufferedWriter bw){
-		
+	public void save(BufferedWriter bw) throws IOException{
+		bw.write("" + family() + '\n');
+		super.save(bw);
+		bw.write("" + breed + '\n');
 	}
-	*/
+	
 	
 	@Override 
 	public String family(){

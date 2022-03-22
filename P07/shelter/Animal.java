@@ -14,18 +14,26 @@ public abstract class Animal {
 		}
 		this.name = name;
 		this.gender = gender;
-		this.age = age;
+		this.age =age;
 	}
 	
-	/*
-	public Animal(BufferReader br){
-		
+	
+	public void save(BufferedWriter bw) throws IOException {
+		bw.write("" + name + '\n'); 
+		bw.write("" + gender + '\n');
+		bw.write("" + age + '\n');
 	}
 	
-	public void save(BufferedWriter bw){
-		
-	}
-	*/
+	
+	public Animal(BufferedReader br) throws IOException{
+		name = br.readLine();
+		gender = Gender.valueOf(br.readLine());
+		age = Integer.parseInt(br.readLine());
+		 
+    }
+	
+	
+	
 	
 	public abstract String family();
 	public abstract String breed();

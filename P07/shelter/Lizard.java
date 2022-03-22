@@ -9,15 +9,19 @@ public class Lizard extends Animal{
 		super(name,gender,age);
 		this.breed = breed;
 	}
-	/*
-	public Animal(BufferReader br){
-		
+	
+	public Lizard(BufferedReader br) throws IOException{
+		super(br);
+		breed = LizardBreed.valueOf(br.readLine()); 
 	}
 	
-	public void save(BufferedWriter bw){
-		
+	
+	public void save(BufferedWriter bw) throws IOException{
+		bw.write("" + family() + '\n');
+		super.save(bw);
+		bw.write("" + breed + '\n');
 	}
-	*/
+	
 	@Override 
 	public String family(){
 		return "lizard";

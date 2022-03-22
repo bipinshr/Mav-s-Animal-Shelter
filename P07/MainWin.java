@@ -13,11 +13,23 @@ import javax.swing.*;
 import javax.imageio.ImageIO;
 import java.awt.image.*;
 import java.awt.Font;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class MainWin extends JFrame{
 	
 	private Shelter shelter = new Shelter("AnimalCompanions");
 	private JLabel data;
-	
+	private String MAGIC_COOKIE = "Mass$^";
+	private String FILE_VERSION = "1.0";
 	public MainWin(String title){
 		super(title);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,9 +55,9 @@ public class MainWin extends JFrame{
 		JMenuItem about = new JMenuItem("About");
 		
 		newshelther.addActionListener(event -> onNewSheltherClick());
-		//openshelther.addActionListener(event -> onOpenSheltherClick());
-		//savehelther.addActionListener(event -> onSaveSheltherClick());
-		//saveasshelther.addActionListener(event -> onSaveSheltherAsClick());
+		openshelther.addActionListener(event -> onOpenSheltherClick());
+		saveshelther.addActionListener(event -> onSaveSheltherClick());
+		saveasshelther.addActionListener(event -> onSaveSheltherAsClick());
 		quit.addActionListener(event -> onQuitClick());
 		newdog.addActionListener(event -> onNewDogClick());
 		newlizard.addActionListener(event -> onNewLizardClick());
@@ -81,19 +93,19 @@ public class MainWin extends JFrame{
 		openfilebutton.setActionCommand("Open a File");
 		openfilebutton.setToolTipText("Open a File");
 		toolbar.add(openfilebutton);
-		//openfilebutton.addActionListener(event->onOpenSheltherClick());
+		openfilebutton.addActionListener(event->onOpenSheltherClick());
 		
 		JButton savefilebutton = new JButton(new ImageIcon("savefile.png"));
 		savefilebutton.setActionCommand("Save a File");
 		savefilebutton.setToolTipText("Save a File");
 		toolbar.add(savefilebutton);
-		//savefilebutton.addActionListener(event->onSaveSheltherClick());
+		savefilebutton.addActionListener(event->onSaveSheltherClick());
 		
 		JButton saveasfilebutton = new JButton(new ImageIcon("saveasfile.png"));
 		saveasfilebutton.setActionCommand("Save As a File");
 		saveasfilebutton.setToolTipText("Save As a file");
 		toolbar.add(saveasfilebutton);
-		//newfilebutton.addActionListener(event->onSaveSheltherAsClick());
+		saveasfilebutton.addActionListener(event->onSaveSheltherAsClick());
 		
 		JButton dogbutton = new JButton(new ImageIcon("dog.png"));
 		dogbutton.setActionCommand("Create a new dog");
@@ -102,8 +114,8 @@ public class MainWin extends JFrame{
 		dogbutton.addActionListener(event->onNewDogClick());
 		
 		JButton lizardbutton = new JButton(new ImageIcon("lizard.png"));
-		dogbutton.setActionCommand("Create a new lizard");
-		dogbutton.setToolTipText("Create a new lizard");
+		lizardbutton.setActionCommand("Create a new lizard");
+		lizardbutton.setToolTipText("Create a new lizard");
 		toolbar.add(lizardbutton);
 		getContentPane().add(toolbar,BorderLayout.PAGE_START);
 		lizardbutton.addActionListener(event->onNewLizardClick());
@@ -241,6 +253,7 @@ public class MainWin extends JFrame{
 		JComboBox genders; // Gender of new animal
 		JSpinner ages;
 		canceled = true;
+		filename = new File("untitled.mass");
 		
 		// Create a dialog box
 		JDialog box = new JDialog();
@@ -351,11 +364,11 @@ public class MainWin extends JFrame{
         //setVisible(true);
 	}
 	
-	void onQuitClick(){
+	public void onQuitClick(){
 		System.exit(0);
 	}
 	
-	void onAboutClick(){
+	public void onAboutClick(){
 		JDialog box = new JDialog();
 		box.setTitle("Mav's Animal Shelter Software");
 		box.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -389,14 +402,67 @@ public class MainWin extends JFrame{
 		
 	}
 	
-	void updateDisplay(){
+	public void updateDisplay(){
 		data.setText("<html>"+shelter.toString().replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll("\n","<br/>")+"</html>");
 	}
 	
-	void onNewSheltherClick(){
-		shelter = new Shelter("AnimalCompanions");
+	public void onNewSheltherClick(){
+		shelter = new Shelter("Animal Companions");
 		updateDisplay();
         data.setFont(new JLabel().getFont());    // Reset to default font
     }
+
+	public void onOpenSheltherClick() {         
+        final JFileChooser fc = new JFileChooser(filename);  
+        FileFilter MassFiles = new FileNameExtensionFilter("Mass files", "mass");
+        fc.addChoosableFileFilter(MassFiles);         // Add "Mass file" filter
+        fc.setFileFilter(MassFiles);                  // Show Mass files only by default
+        
+        int result = fc.showOpenDialog(this);        
+        if (result == JFileChooser.APPROVE_OPTION) { 
+            filename = fc.getSelectedFile();     
+            
+            try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+                String magicCookie = br.readLine();
+                if(!magicCookie.equals(MAGIC_COOKIE)) throw new RuntimeException("Not a Mass file");
+                String fileVersion = br.readLine();
+                if(!fileVersion.equals(FILE_VERSION)) throw new RuntimeException("Incompatible Mass file format");
+                
+                shelter = new Shelter(br);                   
+				updateDisplay();
+                              
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this,"Unable to open " + filename + '\n' + e, 
+                    "Failed", JOptionPane.ERROR_MESSAGE); 
+             }
+        }
+    }
+
 	
+	public void onSaveSheltherClick() {        
+       try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
+           bw.write(MAGIC_COOKIE + '\n');
+           bw.write(FILE_VERSION + '\n');
+           shelter.save(bw);
+       } catch (Exception e) {
+           JOptionPane.showMessageDialog(this, "Unable to open " + filename + '\n' + e,
+               "Failed", JOptionPane.ERROR_MESSAGE); 
+       }
+    }
+	
+	public void onSaveSheltherAsClick() {         
+        final JFileChooser fc = new JFileChooser(filename);  
+        FileFilter MassFiles = new FileNameExtensionFilter("Mass files", "mass");
+        fc.addChoosableFileFilter(MassFiles);         
+        fc.setFileFilter(MassFiles);                  
+        
+        int result = fc.showSaveDialog(this);        
+        if (result == JFileChooser.APPROVE_OPTION) { 
+            filename = fc.getSelectedFile();         
+            if(!filename.getAbsolutePath().endsWith(".mass"))  
+              filename = new File(filename.getAbsolutePath() + ".mass");
+            onSaveSheltherClick();                       
+        }
+    }
+	private File filename;
 }
