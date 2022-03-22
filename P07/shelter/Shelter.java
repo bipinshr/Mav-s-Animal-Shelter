@@ -48,7 +48,7 @@ public class Shelter{
 	}
 	
 	
-	public String getFilename() throws IOException{
+	public String getFilename(){
 		return filename;
 	}
 	

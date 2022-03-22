@@ -26,7 +26,7 @@ import java.io.IOException;
 
 public class MainWin extends JFrame{
 	
-	private Shelter shelter = new Shelter("AnimalCompanions");
+	private Shelter shelter = new Shelter("Animal Companions");
 	private JLabel data;
 	private String MAGIC_COOKIE = "Mass$^";
 	private String FILE_VERSION = "1.0";
@@ -135,6 +135,8 @@ public class MainWin extends JFrame{
 		JComboBox genders; // Gender of new animal
 		JSpinner ages;
 		canceled = true;
+		shelter.setFilename("untitled.mass");
+		
 		
 		// Create a dialog box
 		JDialog box = new JDialog();
@@ -253,7 +255,8 @@ public class MainWin extends JFrame{
 		JComboBox genders; // Gender of new animal
 		JSpinner ages;
 		canceled = true;
-		filename = new File("untitled.mass");
+		shelter.setFilename("untitled.mass");
+		//filename = new File("untitled.mass");
 		
 		// Create a dialog box
 		JDialog box = new JDialog();
@@ -412,7 +415,8 @@ public class MainWin extends JFrame{
         data.setFont(new JLabel().getFont());    // Reset to default font
     }
 
-	public void onOpenSheltherClick() {         
+	public void onOpenSheltherClick() { 
+        File filename =  new File("untitled.mass");
         final JFileChooser fc = new JFileChooser(filename);  
         FileFilter MassFiles = new FileNameExtensionFilter("Mass files", "mass");
         fc.addChoosableFileFilter(MassFiles);         // Add "Mass file" filter
@@ -439,7 +443,8 @@ public class MainWin extends JFrame{
     }
 
 	
-	public void onSaveSheltherClick() {        
+	public void onSaveSheltherClick() {  
+		File filename =  new File(shelter.getFilename());
        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
            bw.write(MAGIC_COOKIE + '\n');
            bw.write(FILE_VERSION + '\n');
@@ -450,7 +455,8 @@ public class MainWin extends JFrame{
        }
     }
 	
-	public void onSaveSheltherAsClick() {         
+	public void onSaveSheltherAsClick() {
+		File filename =  new File("untitled.mass");
         final JFileChooser fc = new JFileChooser(filename);  
         FileFilter MassFiles = new FileNameExtensionFilter("Mass files", "mass");
         fc.addChoosableFileFilter(MassFiles);         
@@ -461,8 +467,9 @@ public class MainWin extends JFrame{
             filename = fc.getSelectedFile();         
             if(!filename.getAbsolutePath().endsWith(".mass"))  
               filename = new File(filename.getAbsolutePath() + ".mass");
+			  shelter.setFilename(filename.getName());
             onSaveSheltherClick();                       
         }
     }
-	private File filename;
+	
 }
