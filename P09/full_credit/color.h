@@ -2,7 +2,7 @@
 #define __COLOR_H
 #include <iostream>
 
-class Color{
+class Color {
 	private:
 		int _red;
 		int _green;
