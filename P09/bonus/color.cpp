@@ -1,0 +1,26 @@
+#include <iostream>
+#include "color.h"
+
+Color::Color(int red, int green, int blue)
+	 : _red{red}, _green{green}, _blue{blue} {}
+	 
+//Color::Color()
+//     :this(0,0,0)
+	
+std::string Color::to_string() {
+	return "(" + std::to_string(_red) + "," + std::to_string(_green) + "," + std::to_string(_blue) + ")";
+}
+
+std::string Color::colorize(std::string text){
+	return "\033[38;2;" + std::to_string(_red) + ";" + std::to_string(_green) + ";"+
+						std::to_string(_blue)+"m" 
+             + text            
+             + "\033[0m";         
+       
+}
+
+std::ostream& operator<<(std::ostream& os, const Color& color) {
+  os <<color.colorize();
+  return os;
+}
+
