@@ -3,7 +3,7 @@
 
 int main() {
     int x,y,z;
-	Color orange{255,165,0};
+	Color orange{255,165,0}; //orage
 	std::cout << orange.colorize("UTA Orange")<<" ";
 	Color purple{159,43,104};
 	std::cout << purple.colorize("UTA purple")<<" ";
