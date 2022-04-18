@@ -25,13 +25,17 @@ public class Shelter{
 		{
 			String type = br.readLine();
 			
-			if(type.equals("dog"))
+			if(type.equals("Dog"))
 			{
 				addAnimals(new Dog(br));
 			}
-			else
+			else if(type.equals("Lizard"))
 			{
 				addAnimals(new Lizard(br));
+			}
+			else
+			{
+				addAnimals(new GuineaPig(br));
 			}
 			
 		}
