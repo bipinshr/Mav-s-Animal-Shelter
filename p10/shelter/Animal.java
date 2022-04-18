@@ -4,9 +4,9 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 public abstract class Animal {
     
-	private String name;
-	private Gender gender;
-	private int age;
+	protected String name;
+	protected Gender gender;
+	protected int age;
     
 	public Animal(String name,Gender gender,int age){
 		if(age < 0){ 
@@ -31,6 +31,8 @@ public abstract class Animal {
 		age = Integer.parseInt(br.readLine());
 		 
     }
+	
+	public abstract void create(Object breed,String name,Gender gender,int age);
 	
 	
 	

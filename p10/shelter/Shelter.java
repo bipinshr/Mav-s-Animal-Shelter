@@ -79,6 +79,10 @@ public class Shelter{
 		clients.add(client);
 	}
 	
+	public int numClients() {
+        return clients.size();
+    }
+	
 	public int numAnimals() {
         return animals.size();
     }

@@ -5,6 +5,9 @@ import shelter.DogBreed;
 import shelter.Lizard;
 import shelter.LizardBreed;
 import shelter.Gender;
+import shelter.Client;
+import shelter.GuineaPig;
+import shelter.GuineaPigBreed;
 import java.awt.*;
 import javax.swing.*;
 import java.io.File;
@@ -35,7 +38,7 @@ public class MainWin extends JFrame{
 		super(title);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		setSize(600,300);
+		setSize(800,500);
 		
 		//------------ This is for menubar ----------- 
 		
@@ -51,6 +54,7 @@ public class MainWin extends JFrame{
 		JMenu Animalmenu = new JMenu("Animal");
 		JMenuItem newdog = new JMenuItem("New Dog");
 		JMenuItem newlizard = new JMenuItem("New Lizard");
+		JMenuItem newguineapig = new JMenuItem("New GuineaPig");
 		JMenuItem listavilable = new JMenuItem("List Available");
 		
 		
@@ -68,9 +72,10 @@ public class MainWin extends JFrame{
 		quit.addActionListener(event -> onQuitClick());
 		newdog.addActionListener(event -> onNewDogClick());
 		newlizard.addActionListener(event -> onNewLizardClick());
-		//listavilable.addActionListener(event->updateDisplay(ANIMALS));
-		//newclient.addActionListener(event->onNewclientClick);
-		//listclient.addActionListener(event->updateDisplay(CLIENTS));
+		newguineapig.addActionListener(event -> onNewGuineapigClick());
+		listavilable.addActionListener(event->updateDisplay(DataView.ANIMALS));
+		newclient.addActionListener(event->onNewclientClick());
+		listclient.addActionListener(event->updateDisplay(DataView.CLIENTS));
 		about.addActionListener(event -> onAboutClick());
 		
 		
@@ -82,6 +87,7 @@ public class MainWin extends JFrame{
 		File.add(quit);
 		Animalmenu.add(newdog);
 		Animalmenu.add(newlizard);
+		Animalmenu.add(newguineapig);
 		Animalmenu.add(listavilable);
 		Clientmenu.add(newclient);
 		Clientmenu.add(listclient);
@@ -120,7 +126,7 @@ public class MainWin extends JFrame{
 		saveasfilebutton.setToolTipText("Save As a file");
 		toolbar.add(saveasfilebutton);
 		saveasfilebutton.addActionListener(event->onSaveSheltherAsClick());
-		
+		toolbar.add(Box.createHorizontalStrut(10));
 		JButton dogbutton = new JButton(new ImageIcon("dog.png"));
 		dogbutton.setActionCommand("Create a new dog");
 		dogbutton.setToolTipText("Create a new dog");
@@ -131,259 +137,46 @@ public class MainWin extends JFrame{
 		lizardbutton.setActionCommand("Create a new lizard");
 		lizardbutton.setToolTipText("Create a new lizard");
 		toolbar.add(lizardbutton);
-		getContentPane().add(toolbar,BorderLayout.PAGE_START);
 		lizardbutton.addActionListener(event->onNewLizardClick());
 		
+		JButton guineapigbutton = new JButton(new ImageIcon("guineaPig.png"));
+		guineapigbutton.setActionCommand("Create a new guinea pig");
+		guineapigbutton.setToolTipText("Create a new guinea pig");
+		toolbar.add(guineapigbutton);
+		guineapigbutton.addActionListener(event->onNewGuineapigClick());
+		toolbar.add(Box.createHorizontalStrut(10));
+		JButton clientbutton = new JButton(new ImageIcon("client.png"));
+		clientbutton.setActionCommand("Create a new client");
+		clientbutton.setToolTipText("Create a new client");
+		toolbar.add(clientbutton);
+		clientbutton.addActionListener(event->onNewclientClick());
 		
+		
+		
+		getContentPane().add(toolbar,BorderLayout.PAGE_START);
 		//dailog box
 		data = new JLabel();
 		add(data,BorderLayout.CENTER);
 		
 	}
 	public void onNewDogClick(){
-		int width = 500;  // Default dialog size
-		int height = 200;
-		boolean canceled;
-		JComboBox breeds;   // Breeds of animals
-        JTextField names;  // Name of new animal
-		JComboBox genders; // Gender of new animal
-		JSpinner ages;
-		canceled = true;
-		shelter.setFilename("untitled.mass");
-		
-		
-		// Create a dialog box
-		JDialog box = new JDialog();
-		box.setTitle("New Dog");
-		box.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		box.setSize(width,height);  
-		
-		box.setLayout(new GridBagLayout());
-        GridBagConstraints constraints = new GridBagConstraints(); // Specify cell for widgets
-        constraints.gridwidth = 1;   
-        constraints.gridheight = 1;  
-        constraints.weightx = 1;     
-        constraints.weighty = 0;    
-        constraints.insets = new Insets(2, 5, 2, 5);  
-        constraints.fill= GridBagConstraints.BOTH;    
-        constraints.anchor = GridBagConstraints.LINE_START;  
-            
-        
-        // Configure GridBagLayout constraints for the left (labels) column
-        GridBagConstraints constraintsLabel = (GridBagConstraints) constraints.clone(); // Duplicate constraints
-        constraintsLabel.weightx = 0;  // Do NOT resize the label column in width as window resizes
-        
-        // ////////////////////////////////////
-        // Breed of animal
-        JLabel breed = new JLabel("Breed");
-        constraintsLabel.gridx = 0;
-        constraintsLabel.gridy = 0;
-        box.add(breed, constraintsLabel);                         // Add the button to the JFrame
-
-        String[] options = {"Beagle", "Poodle", "Dobermann", "Bulldog", "Boxer", "Labrador", "Mastiff"};
-        breeds = new JComboBox<String>(options);
-        constraints.gridx = 1;
-        constraints.gridy = 0;
-        constraints.weighty = 0;
-        box.add(breeds, constraints);
-		box.setVisible(true);
-		
-		// Name of animal
-        JLabel name = new JLabel("Name");
-        constraintsLabel.gridx = 0;
-        constraintsLabel.gridy = 1;
-        box.add(name, constraintsLabel);
-        
-        names = new JTextField(20); 
-        constraints.gridx = 1;
-        constraints.gridy = 1;
-        constraints.weighty = 0;    
-        box.add(names, constraints);
-		
-		 // Gender of animal
-        JLabel gender = new JLabel("Gender");
-        constraintsLabel.gridx = 0;
-        constraintsLabel.gridy = 2;
-        box.add(gender, constraintsLabel);
-        
-        String[] gender_text = {"male", "female"};
-        genders = new JComboBox<String>(gender_text);
-        constraints.gridx = 1;
-        constraints.gridy = 2;
-        constraints.weighty = 0;
-        box.add(genders, constraints);
-		
-		// age of animal
-		JLabel age = new JLabel("Age");
-        constraintsLabel.gridx = 0;
-        constraintsLabel.gridy = 3;
-        box.add(age, constraintsLabel);
-        
-        SpinnerModel range = new SpinnerNumberModel(0, 0, 25, 1);
-        ages = new JSpinner(range);
-        constraints.gridx = 1;
-        constraints.gridy = 3;
-        constraints.weighty = 0;
-        box.add(ages, constraints);
-		
-		 
-		
-		
-		
-		// Add OK and Cancel buttons
-        JPanel panel = new JPanel();
-        
-        JButton ok = new JButton("OK");
-        ok.addActionListener(event -> {
-            //canceled = false;   // This accepts the data below
-			String breedtype = breeds.getSelectedItem().toString();
-			String gendertype = genders.getSelectedItem().toString();
-			shelter.addAnimals(new Dog(DogBreed.valueOf(breedtype),names.getText(),Gender.valueOf(gendertype),(int)ages.getValue()));
-            updateDisplay();
-			box.setVisible(false);  // Hide dialog but keep it to get the entered data!
-        });
-        panel.add(ok);
-        
-        JButton cancel = new JButton("Cancel");
-        cancel.addActionListener(event -> {
-            //canceled = true;    // Ignore the data below - the user clicked Cancel
-            box.setVisible(false);
-        });
-        panel.add(cancel);
-        
-        constraints.gridx = 0;
-        constraints.gridy = 4;
-        constraints.gridwidth = 2;   // The buttons on the panel span the entire dialog
-        constraints.anchor = GridBagConstraints.CENTER;    // Center the buttons
-        box.add(panel, constraints);
-		//pack();
-        //setVisible(true);
+		newAnimals(new Dog(),new JComboBox(DogBreed.values()));
 	}
 	
 	public void onNewLizardClick(){
-		int width = 500;  // Default dialog size
-		int height = 200;
-		boolean canceled;
-		JComboBox breeds;   // Breeds of animals
-        JTextField names;  // Name of new animal
-		JComboBox genders; // Gender of new animal
-		JSpinner ages;
-		canceled = true;
-		shelter.setFilename("untitled.mass");
-		//filename = new File("untitled.mass");
+		newAnimals(new Lizard(),new JComboBox(LizardBreed.values()));
 		
-		// Create a dialog box
-		JDialog box = new JDialog();
-		box.setTitle("New Dog");
-		box.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		box.setSize(width,height);  
-		
-		box.setLayout(new GridBagLayout());
-        GridBagConstraints constraints = new GridBagConstraints(); 
-        constraints.gridwidth = 1;   
-        constraints.gridheight = 1;  
-        constraints.weightx = 1;     
-        constraints.weighty = 0;     
-        constraints.insets = new Insets(2, 5, 2, 5);  
-        constraints.fill= GridBagConstraints.BOTH;    
-        constraints.anchor = GridBagConstraints.LINE_START;  
-           
-        
-        
-        GridBagConstraints constraintsLabel = (GridBagConstraints) constraints.clone();
-        constraintsLabel.weightx = 0;  
-        
-        // ////////////////////////////////////
-        // Breed of animal
-        JLabel breed = new JLabel("Breed");
-        constraintsLabel.gridx = 0;
-        constraintsLabel.gridy = 0;
-        box.add(breed, constraintsLabel);                         // Add the button to the JFrame
-
-        String[] options = {"Tuatara", "Chuckwalla", "Komodo", "Gecko", "Agamid", "Armadillo"};
-        breeds = new JComboBox<String>(options);
-        //breeds.setEditable(true); // Allow custom types to be entered as well
-        constraints.gridx = 1;
-        constraints.gridy = 0;
-        constraints.weighty = 0;
-        box.add(breeds, constraints);
-		box.setVisible(true);
-		
-		// Name of animal
-        JLabel name = new JLabel("Name");
-        constraintsLabel.gridx = 0;
-        constraintsLabel.gridy = 1;
-        box.add(name, constraintsLabel);
-        
-        names = new JTextField(20); 
-        constraints.gridx = 1;
-        constraints.gridy = 1;
-        constraints.weighty = 0;    
-        box.add(names, constraints);
-		
-		 // Gender of animal
-        JLabel gender = new JLabel("Gender");
-        constraintsLabel.gridx = 0;
-        constraintsLabel.gridy = 2;
-        box.add(gender, constraintsLabel);
-        
-        String[] gender_text = {"male", "female"};
-        genders = new JComboBox<String>(gender_text);
-        constraints.gridx = 1;
-        constraints.gridy = 2;
-        constraints.weighty = 0;
-        box.add(genders, constraints);
-		
-		// age of animal
-		JLabel age = new JLabel("Age");
-        constraintsLabel.gridx = 0;
-        constraintsLabel.gridy = 3;
-        box.add(age, constraintsLabel);
-        
-        SpinnerModel range = new SpinnerNumberModel(0, 0, 25, 1);
-        ages = new JSpinner(range);
-        constraints.gridx = 1;
-        constraints.gridy = 3;
-        constraints.weighty = 0;
-        box.add(ages, constraints);
-		
-		 
-		
-		
-		
-		// Add OK and Cancel buttons
-        JPanel panel = new JPanel();
-        
-        JButton ok = new JButton("OK");
-        ok.addActionListener(event -> {
-            //canceled = false;   // This accepts the data below
-			String breedtype = breeds.getSelectedItem().toString();
-			String gendertype = genders.getSelectedItem().toString();
-			shelter.addAnimals(new Lizard(LizardBreed.valueOf(breedtype),names.getText(),Gender.valueOf(gendertype),(int)ages.getValue()));
-            updateDisplay();
-			box.setVisible(false);  // Hide dialog but keep it to get the entered data!
-        });
-        panel.add(ok);
-        
-        JButton cancel = new JButton("Cancel");
-        cancel.addActionListener(event -> {
-            //canceled = true;    // Ignore the data below - the user clicked Cancel
-            box.setVisible(false);
-        });
-        panel.add(cancel);
-        
-        constraints.gridx = 0;
-        constraints.gridy = 4;
-        constraints.gridwidth = 2;   // The buttons on the panel span the entire dialog
-        constraints.anchor = GridBagConstraints.CENTER;    // Center the buttons
-        box.add(panel, constraints);
-		//pack();
-        //setVisible(true);
 	}
 	
 	public void onQuitClick(){
 		System.exit(0);
+		
 	}
+	
+	public void onNewGuineapigClick(){
+		newAnimals(new GuineaPig(),new JComboBox(GuineaPigBreed.values()));
+	}
+	
 	
 	public void onAboutClick(){
 		JDialog box = new JDialog();
@@ -407,21 +200,44 @@ public class MainWin extends JFrame{
           + "<p>Dog icon by Openclipart, licensed under Public domain<p><font size=-2> <https://publicdomainvectors.org/en/free-clipart/Cartoon-dog-vector-image/12091.html></font></p>"
 		  + "<p>Lizard icon by webalys, licensed under licensed for personal</p>"
 		  + "<p>and commercial purposes with attribution<p><font size=-2> <https://publicdomainvectors.org/en/free-clipart/Cartoon-dog-vector-image/12091.html></font></p>"
-          + "<p><font size=-2>https://www.iconfinder.com/icons/4888173/lizard_icon</font></p>"
+          + "<p>Guinepig icon by Freepik, licensed under  Free for personal and commercial purpose with attribution<p><font size=-2> <https://publicdomainvectors.org/en/free-clipart/Cartoon-dog-vector-image/12091.html></font></p>"
+  		  + "<p><font size=-2>https://www.iconfinder.com/icons/4888173/lizard_icon</font></p>"
 		  + "<p>New File icon by icon 8, licensed under Public domain<p><font size=-2> <https://www.iconsdb.com/white-icons/add-file-icon.html></font></p>"
 		  + "<p>Open File icon by icon 8, licensed under Public domain<p><font size=-2> <https://www.iconsdb.com/white-icons/open-in-browser-icon.html></font></p>"
           + "<p>Save File icon by icon 8, licensed under Public domain<p><font size=-2> <https://www.iconsdb.com/blue-icons/save-icon.html></font></p>"
 		  + "<p>Save As File icon by icon 8, licensed under Public domain<p><font size=-2> <https://www.iconsdb.com/black-icons/save-as-icon.html></font></p>"
+		  + "<p>Client icon by Freepik, licensed under Free for personal and commercial purpose with attribution<p><font size=-2> <https://www.iconsdb.com/black-icons/save-as-icon.html></font></p>"
 		  + "</html>");
         
         box.add(text);
 		box.setVisible(true);
 		
+		
+	}
+	public void onNewclientClick(){
+		JTextField name = new JTextField(20);
+		JTextField phone = new JTextField(20);
+		Object[] fields = {
+				"Name",name,
+				"Phone",phone
+			};
+		int result = JOptionPane.showConfirmDialog(null,fields,"New Client", JOptionPane.OK_CANCEL_OPTION);
+		if (result == JOptionPane.OK_OPTION) {
+		  shelter.addClient(new Client(name.getText(),phone.getText()));
+		  updateDisplay(DataView.CLIENTS);
+		}
 	}
 	
-	public void updateDisplay(){
-		data.setText("<html>"+shelter.toString().replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll("\n","<br/>")+"</html>");
+	private void updateDisplay(DataView view){
+		if(view.equals(DataView.ANIMALS) ){
+			data.setText("<html>"+shelter.toString().replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll("\n","<br/>")+"</html>");
+		}
+		if(view.equals(DataView.CLIENTS))
+		{
+			data.setText("<html>"+shelter.clientToString().replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll("\n","<br/>")+"</html>");
+		}
 	}
+	
 	
 	public void onNewSheltherClick(){
 		String name = JOptionPane.showInputDialog(
@@ -437,7 +253,7 @@ public class MainWin extends JFrame{
     public void onNewShelterClick(String name) {
         shelter = new Shelter(name);
         shelter.setFilename("Untitled.mass");
-        updateDisplay();
+        updateDisplay(DataView.ANIMALS);
     }
 
 	public void onOpenSheltherClick() { 
@@ -458,7 +274,7 @@ public class MainWin extends JFrame{
                 if(!fileVersion.equals(FILE_VERSION)) throw new RuntimeException("Incompatible Mass file format");
                 
                 shelter = new Shelter(br);                   
-				updateDisplay();
+				updateDisplay(DataView.ANIMALS);
                               
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this,"Unable to open " + filename + '\n' + e, 
@@ -496,5 +312,132 @@ public class MainWin extends JFrame{
             onSaveSheltherClick();                       
         }
     }
+	
+	private <T extends Animal> void newAnimals(T animal, JComboBox breeds){
+		//newAnimals(new Dog(),new JComboBox(DogBreed.values()));
+		//newAnimals(new Lizard(),new JComboBox(LizardBreed.values()));
+		//newAnimals(new GuineaPig(),new JComboBox(GuineaPigBreed.values()));
+		int width = 500;  // Default dialog size
+		int height = 200;
+		boolean canceled;
+		//JComboBox breeds;   // Breeds of animals
+        JTextField names;  // Name of new animal
+		JComboBox genders; // Gender of new animal
+		JSpinner ages;
+		canceled = true;
+		shelter.setFilename("untitled.mass");
+		
+		
+		// Create a dialog box
+		JDialog box = new JDialog();
+		box.setTitle("New " + animal.family());
+		box.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		box.setSize(width,height);  
+		
+		box.setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints(); // Specify cell for widgets
+        constraints.gridwidth = 1;   
+        constraints.gridheight = 1;  
+        constraints.weightx = 1;     
+        constraints.weighty = 0;    
+        constraints.insets = new Insets(2, 5, 2, 5);  
+        constraints.fill= GridBagConstraints.BOTH;    
+        constraints.anchor = GridBagConstraints.LINE_START;  
+            
+        
+        // Configure GridBagLayout constraints for the left (labels) column
+        GridBagConstraints constraintsLabel = (GridBagConstraints) constraints.clone(); // Duplicate constraints
+        constraintsLabel.weightx = 0;  // Do NOT resize the label column in width as window resizes
+        
+        // ////////////////////////////////////
+        // Breed of animal
+        JLabel breed = new JLabel("Breed");
+        constraintsLabel.gridx = 0;
+        constraintsLabel.gridy = 0;
+        box.add(breed, constraintsLabel);                         // Add the button to the JFrame
+
+        //String[] options = {"Beagle", "Poodle", "Dobermann", "Bulldog", "Boxer", "Labrador", "Mastiff"};
+        //breeds = new JComboBox<String>(options);
+		//JComboBox breeds = new JComboBox(DogBreed.values());
+        constraints.gridx = 1;
+        constraints.gridy = 0;
+        constraints.weighty = 0;
+        box.add(breeds, constraints);
+		box.setVisible(true);
+		
+		// Name of animal
+        JLabel name = new JLabel("Name");
+        constraintsLabel.gridx = 0;
+        constraintsLabel.gridy = 1;
+        box.add(name, constraintsLabel);
+        
+        names = new JTextField(20); 
+        constraints.gridx = 1;
+        constraints.gridy = 1;
+        constraints.weighty = 0;    
+        box.add(names, constraints);
+		
+		 // Gender of animal
+        JLabel gender = new JLabel("Gender");
+        constraintsLabel.gridx = 0;
+        constraintsLabel.gridy = 2;
+        box.add(gender, constraintsLabel);
+        
+        String[] gender_text = {"male", "female"};
+        genders = new JComboBox<String>(gender_text);
+        constraints.gridx = 1;
+        constraints.gridy = 2;
+        constraints.weighty = 0;
+        box.add(genders, constraints);
+		
+		// age of animal
+		JLabel age = new JLabel("Age");
+        constraintsLabel.gridx = 0;
+        constraintsLabel.gridy = 3;
+        box.add(age, constraintsLabel);
+        
+        SpinnerModel range = new SpinnerNumberModel(0, 0, 25, 1);
+        ages = new JSpinner(range);
+        constraints.gridx = 1;
+        constraints.gridy = 3;
+        constraints.weighty = 0;
+        box.add(ages, constraints);
+		
+		 
+		
+		
+		
+		// Add OK and Cancel buttons
+        JPanel panel = new JPanel();
+        
+        JButton ok = new JButton("OK");
+        ok.addActionListener(event -> {
+            //canceled = false;   // This accepts the data below
+			String breedtype = breeds.getSelectedItem().toString();
+			String gendertype = genders.getSelectedItem().toString();
+			animal.create(breeds.getSelectedItem(),names.getText(),Gender.valueOf(gendertype),(int)ages.getValue());
+			//shelter.addAnimals(new Dog(DogBreed.valueOf(breedtype),names.getText(),Gender.valueOf(gendertype),(int)ages.getValue()));
+            shelter.addAnimals(animal);
+			updateDisplay(DataView.ANIMALS);
+			box.setVisible(false);  // Hide dialog but keep it to get the entered data!
+        });
+        panel.add(ok);
+        
+        JButton cancel = new JButton("Cancel");
+        cancel.addActionListener(event -> {
+            //canceled = true;    // Ignore the data below - the user clicked Cancel
+            box.setVisible(false);
+        });
+        panel.add(cancel);
+        
+        constraints.gridx = 0;
+        constraints.gridy = 4;
+        constraints.gridwidth = 2;   // The buttons on the panel span the entire dialog
+        constraints.anchor = GridBagConstraints.CENTER;    // Center the buttons
+        box.add(panel, constraints);
+		//pack();
+        //setVisible(true);
+	}
+	
 	
 }

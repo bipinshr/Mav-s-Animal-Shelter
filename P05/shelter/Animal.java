@@ -1,9 +1,9 @@
 package shelter;
-abstract class Animal {
+public abstract class Animal {
     
-	protected String name;
-	protected Gender gender;
-	protected int age;
+	private String name;
+	private Gender gender;
+	private int age;
     
 	public Animal(String name,Gender gender,int age){
 		if(age < 0){ 
@@ -15,9 +15,12 @@ abstract class Animal {
 	}
 	public abstract String family();
 	public abstract String breed();
+	public String name() {return name;}
+    public Gender gender() {return gender;}
+    public int age() {return age;}
 	
 	public String toString(){
-		return "" + name +" (" + age + " year old " + gender + ")" ;
+		return name + " (" + age + " year old " + gender;
 	}
 }
 

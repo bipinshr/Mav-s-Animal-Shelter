@@ -1,5 +1,6 @@
 import shelter.Shelter;
 import shelter.Dog;
+import shelter.Animal;
 import shelter.Lizard;
 import shelter.Gender;
 import shelter.DogBreed;

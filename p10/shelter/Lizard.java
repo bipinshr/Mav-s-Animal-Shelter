@@ -5,6 +5,11 @@ import java.io.IOException;
 public class Lizard extends Animal{
 	private LizardBreed breed;
 	
+	public Lizard()
+	{
+		this(LizardBreed.valueOf("Tuatara"), "Default", Gender.female, 0);
+	}
+	
 	public Lizard(LizardBreed breed,String name,Gender gender,int age){
 		super(name,gender,age);
 		this.breed = breed;
@@ -22,9 +27,19 @@ public class Lizard extends Animal{
 		bw.write("" + breed + '\n');
 	}
 	
+	@Override
+	public void create(Object breed,String name,Gender gender,int age)
+	{
+		this.name=name;
+		this.gender=gender;
+		this.age=age;
+		
+		this.breed=(LizardBreed)breed;
+	}
+	
 	@Override 
 	public String family(){
-		return "lizard";
+		return "Lizard";
 	}
 	
 	@Override 

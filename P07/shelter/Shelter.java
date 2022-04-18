@@ -11,7 +11,6 @@ public class Shelter{
 	
 	public Shelter(String name){
 		this.name = name;
-		//this.filename ="untitled.nim";
 		this.animals = new ArrayList<>();
 	}
 	

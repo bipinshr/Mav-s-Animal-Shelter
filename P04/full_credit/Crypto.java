@@ -5,7 +5,11 @@ public class Crypto{
 		String key;
 		if(args.length == 1)
 		{
-			key = args[0];
+			if(args[0] == "rot13")
+			{
+				Rot13 rot = new Rot13();
+			}
+			//key = args[0];
 		}
 		else
 		{

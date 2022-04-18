@@ -9,16 +9,16 @@ public class Lizard extends Animal{
 	
 	@Override 
 	public String family(){
-		return "" + "lizard";
+		return "lizard";
 	}
 	
 	@Override 
 	public String breed(){
-		return breed.toString();
+		return breed.name();
 	}
 	
 	@Override 
 	public String toString(){
-		return "" + name +" (" + age + " year old " + gender +" "+ breed.toString() + " " +"Lizard"+ ")"  ; 
+		return super.toString() +" "+ breed.name() + " " +"Lizard"+ ")"  ; 
 	} 
 }
