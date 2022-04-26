@@ -228,6 +228,8 @@ public class MainWin extends JFrame{
           + "<p>Save File icon by icon 8, licensed under Public domain<p><font size=-2> <https://www.iconsdb.com/blue-icons/save-icon.html></font></p>"
 		  + "<p>Save As File icon by icon 8, licensed under Public domain<p><font size=-2> <https://www.iconsdb.com/black-icons/save-as-icon.html></font></p>"
 		  + "<p>Client icon by Freepik, licensed under Free for personal and commercial purpose with attribution<p><font size=-2> <https://www.iconsdb.com/black-icons/save-as-icon.html></font></p>"
+		  + "<p>Adopt icon by icon 8, licensed under Public domain<p><font size=-2> <https://img.icons8.com/external-flaticons-lineal-color-flat-icons/344/external-adoption-veterinary-flaticons-lineal-color-flat-icons-2.png></font></p>"
+		  + "<p>Adopt list File icon by icon 8, licensed under Public domain<p><font size=-2> <https://icons8.com/icons/set/adopt-list></font></p>"
 		  + "</html>");
         
         box.add(text);
