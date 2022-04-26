@@ -26,6 +26,8 @@ import java.io.FileReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.ListIterator;
 
 public class MainWin extends JFrame{
 	
@@ -56,6 +58,7 @@ public class MainWin extends JFrame{
 		JMenuItem newlizard = new JMenuItem("New Lizard");
 		JMenuItem newguineapig = new JMenuItem("New GuineaPig");
 		JMenuItem listavilable = new JMenuItem("List Available");
+		JMenuItem listadopted = new JMenuItem("List Adopted");
 		
 		
 		JMenu Clientmenu = new JMenu("Client");
@@ -75,6 +78,7 @@ public class MainWin extends JFrame{
 		newlizard.addActionListener(event -> onNewLizardClick());
 		newguineapig.addActionListener(event -> onNewGuineapigClick());
 		listavilable.addActionListener(event->updateDisplay(DataView.ANIMALS));
+		listadopted.addActionListener(event->updateDisplay(DataView.ADOPIONS));
 		newclient.addActionListener(event->onNewclientClick());
 		listclient.addActionListener(event->updateDisplay(DataView.CLIENTS));
 		adoptanimal.addActionListener(event->onAdoptAnimalClick());
@@ -91,6 +95,7 @@ public class MainWin extends JFrame{
 		Animalmenu.add(newlizard);
 		Animalmenu.add(newguineapig);
 		Animalmenu.add(listavilable);
+		Animalmenu.add(listadopted);
 		Clientmenu.add(newclient);
 		Clientmenu.add(listclient);
 		Clientmenu.add(adoptanimal);
@@ -153,6 +158,18 @@ public class MainWin extends JFrame{
 		clientbutton.setToolTipText("Create a new client");
 		toolbar.add(clientbutton);
 		clientbutton.addActionListener(event->onNewclientClick());
+		
+		JButton adoptbutton = new JButton(new ImageIcon("adopt.png"));
+		adoptbutton.setActionCommand("Adopt Animal");
+		adoptbutton.setToolTipText("Adopt Animal");
+		toolbar.add(adoptbutton);
+		adoptbutton.addActionListener(event->onAdoptAnimalClick());
+		
+		JButton adoptlistbutton = new JButton(new ImageIcon("adoptlist.png"));
+		adoptlistbutton.setActionCommand("List Adopt Animal");
+		adoptlistbutton.setToolTipText("List Adopt Animal");
+		toolbar.add(adoptlistbutton);
+		adoptlistbutton.addActionListener(event->updateDisplay(DataView.ADOPIONS));
 		
 		
 		
@@ -451,14 +468,22 @@ public class MainWin extends JFrame{
 		//JTextField name = new JTextField(20);
 		//JTextField phone = new JTextField(20);
 		JComboBox animal = new JComboBox();
+		Iterator it = shelter.animalListilerator();
+		while (it.hasNext()) {
+			animal.addItem(it.next());
+		}
 		JComboBox client = new JComboBox();
+		Iterator snd = shelter.clientListilerator();
+		while (snd.hasNext()) {
+			client.addItem(snd.next());
+		}
 		Object[] fields = {
 				"Animal",animal,
 				"Client",client
 			};
 		int result = JOptionPane.showConfirmDialog(null,fields,"Adoptions", JOptionPane.OK_CANCEL_OPTION);
 		if (result == JOptionPane.OK_OPTION) {
-		  //shelter.adopt(animal,client);
+		  shelter.adopt((Animal)animal.getSelectedItem(),(Client)client.getSelectedItem());
 		  updateDisplay(DataView.ADOPIONS);
 		}
 	}

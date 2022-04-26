@@ -65,7 +65,7 @@ public class Shelter{
 		{
 			a.save(bw);
 		}
-		
+				
 	}
 	
 	
@@ -133,6 +133,7 @@ public class Shelter{
 	public void adopt(Animal animal,Client client)
 	{
 		adoptions.put(animal,client);
+		animals.remove(animal);
 	}
 	
 	public Iterator<Animal> adoptedAnimaliterator(){
@@ -152,7 +153,7 @@ public class Shelter{
 		String seperator=" ";
 		for(Animal key : adoptions.keySet())
 		{			
-             result += seperator + key +adoptions.get(key);
+             result += seperator + key + " to "+ adoptions.get(key);
 			 seperator="\n";
 		}
 		return result;
