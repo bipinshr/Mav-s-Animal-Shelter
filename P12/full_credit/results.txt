@@ -1,0 +1,307 @@
+====================
+HOMEWORK P12 RESULTS
+====================
+
+Spring 2022
+
+
+FULL CREDIT
+===========
+
+QUESTION 1: How many hashes did you use as FindMinHash's parameter to achieve a 30 to 45 second runtime: 500,000,000
+
+Number of Hashes (example: 750,000,000): 500,000,000
+Number of Seconds (example: 30.870s): 36.702s
+
+Note: We're only interested in the "real" seconds for this question.
+
+
+QUESTION 2: Provide the full ``time`` output for your program, with 1 to 16 threads. **Ensure that the result is identical for all 16 runs.** You can run all of these with a single bash command if you like (replace 750000000 with your Number of Hashes from QUESTION 1): 
+
+``for i in {1..16} ; do time java FindMinHash 750000000 $i ; done``
+
+Example Timing (first 2 of 16 runs only on Antares):
+
+ricegf@antares$ for i in {1..16} ; do time java FindMinHash 750000000 $i ; done
+
+Thread-0    (ID  13) searching               0 to     750,000,000
+Best word "NETWORKING'S DEBBIE" has hashCode 4
+
+real	0m35.033s
+user	0m35.207s
+sys	0m0.256s
+
+Thread-0    (ID  13) searching               0 to     375,000,000
+Thread-1    (ID  14) searching     375,000,001 to     750,000,000
+Best word "NETWORKING'S DEBBIE" has hashCode 4
+
+real	0m17.538s
+user	0m34.826s
+sys	0m0.289s
+
+
+YOUR Timing:
+
+Thread-0    (ID  14) searching               0 to     500,000,000
+Best word "NETWORKING'S DEBBIE" has hashCode 4
+
+real	0m44.102s
+user	0m44.084s
+sys	0m0.325s
+
+Thread-0    (ID  14) searching               0 to     250,000,000
+Thread-1    (ID  15) searching     250,000,000 to     500,000,000
+Best word "NETWORKING'S DEBBIE" has hashCode 4
+
+real	0m25.586s
+user	0m47.348s
+sys	0m0.547s
+
+Thread-0    (ID  14) searching               0 to     166,666,666
+Thread-2    (ID  16) searching     333,333,332 to     499,999,998
+Thread-1    (ID  15) searching     166,666,666 to     333,333,332
+Best word "NETWORKING'S DEBBIE" has hashCode 4
+
+real	0m26.277s
+user	0m58.943s
+sys	0m0.785s
+
+Thread-0    (ID  14) searching               0 to     125,000,000
+Thread-3    (ID  17) searching     375,000,000 to     500,000,000
+Thread-2    (ID  16) searching     250,000,000 to     375,000,000
+Thread-1    (ID  15) searching     125,000,000 to     250,000,000
+Best word "NETWORKING'S DEBBIE" has hashCode 4
+
+real	0m26.044s
+user	1m8.815s
+sys	0m0.692s
+
+Thread-0    (ID  14) searching               0 to     100,000,000
+Thread-4    (ID  18) searching     400,000,000 to     500,000,000
+Thread-3    (ID  17) searching     300,000,000 to     400,000,000
+Thread-2    (ID  16) searching     200,000,000 to     300,000,000
+Thread-1    (ID  15) searching     100,000,000 to     200,000,000
+Best word "NETWORKING'S DEBBIE" has hashCode 4
+
+real	0m16.974s
+user	1m7.818s
+sys	0m0.597s
+
+Thread-0    (ID  14) searching               0 to      83,333,333
+Thread-5    (ID  19) searching     416,666,665 to     499,999,998
+Thread-4    (ID  18) searching     333,333,332 to     416,666,665
+Thread-3    (ID  17) searching     249,999,999 to     333,333,332
+Thread-2    (ID  16) searching     166,666,666 to     249,999,999
+Thread-1    (ID  15) searching      83,333,333 to     166,666,666
+Best word "NETWORKING'S DEBBIE" has hashCode 4
+
+real	0m14.324s
+user	1m14.433s
+sys	0m0.597s
+
+Thread-0    (ID  14) searching               0 to      71,428,571
+Thread-6    (ID  20) searching     428,571,426 to     499,999,997
+Thread-5    (ID  19) searching     357,142,855 to     428,571,426
+Thread-4    (ID  18) searching     285,714,284 to     357,142,855
+Thread-3    (ID  17) searching     214,285,713 to     285,714,284
+Thread-2    (ID  16) searching     142,857,142 to     214,285,713
+Thread-1    (ID  15) searching      71,428,571 to     142,857,142
+Best word "NETWORKING'S DEBBIE" has hashCode 4
+
+real	0m13.289s
+user	1m23.725s
+sys	0m0.737s
+
+Thread-0    (ID  14) searching               0 to      62,500,000
+Thread-7    (ID  21) searching     437,500,000 to     500,000,000
+Thread-6    (ID  20) searching     375,000,000 to     437,500,000
+Thread-5    (ID  19) searching     312,500,000 to     375,000,000
+Thread-4    (ID  18) searching     250,000,000 to     312,500,000
+Thread-3    (ID  17) searching     187,500,000 to     250,000,000
+Thread-2    (ID  16) searching     125,000,000 to     187,500,000
+Thread-1    (ID  15) searching      62,500,000 to     125,000,000
+Best word "NETWORKING'S DEBBIE" has hashCode 4
+
+real	0m12.631s
+user	1m31.187s
+sys	0m0.734s
+
+Thread-0    (ID  14) searching               0 to      55,555,555
+Thread-8    (ID  22) searching     444,444,440 to     499,999,995
+Thread-7    (ID  21) searching     388,888,885 to     444,444,440
+Thread-6    (ID  20) searching     333,333,330 to     388,888,885
+Thread-5    (ID  19) searching     277,777,775 to     333,333,330
+Thread-4    (ID  18) searching     222,222,220 to     277,777,775
+Thread-3    (ID  17) searching     166,666,665 to     222,222,220
+Thread-2    (ID  16) searching     111,111,110 to     166,666,665
+Thread-1    (ID  15) searching      55,555,555 to     111,111,110
+Best word "NETWORKING'S DEBBIE" has hashCode 4
+
+real	0m13.299s
+user	1m30.223s
+sys	0m0.751s
+
+Thread-0    (ID  14) searching               0 to      50,000,000
+Thread-9    (ID  23) searching     450,000,000 to     500,000,000
+Thread-8    (ID  22) searching     400,000,000 to     450,000,000
+Thread-7    (ID  21) searching     350,000,000 to     400,000,000
+Thread-6    (ID  20) searching     300,000,000 to     350,000,000
+Thread-5    (ID  19) searching     250,000,000 to     300,000,000
+Thread-4    (ID  18) searching     200,000,000 to     250,000,000
+Thread-3    (ID  17) searching     150,000,000 to     200,000,000
+Thread-2    (ID  16) searching     100,000,000 to     150,000,000
+Thread-1    (ID  15) searching      50,000,000 to     100,000,000
+Best word "NETWORKING'S DEBBIE" has hashCode 4
+
+real	0m13.445s
+user	1m31.474s
+sys	0m0.873s
+
+Thread-0    (ID  14) searching               0 to      45,454,545
+Thread-10   (ID  24) searching     454,545,450 to     499,999,995
+Thread-9    (ID  23) searching     409,090,905 to     454,545,450
+Thread-8    (ID  22) searching     363,636,360 to     409,090,905
+Thread-7    (ID  21) searching     318,181,815 to     363,636,360
+Thread-6    (ID  20) searching     272,727,270 to     318,181,815
+Thread-5    (ID  19) searching     227,272,725 to     272,727,270
+Thread-4    (ID  18) searching     181,818,180 to     227,272,725
+Thread-3    (ID  17) searching     136,363,635 to     181,818,180
+Thread-1    (ID  15) searching      45,454,545 to      90,909,090
+Thread-2    (ID  16) searching      90,909,090 to     136,363,635
+Best word "NETWORKING'S DEBBIE" has hashCode 4
+
+real	0m13.274s
+user	1m30.274s
+sys	0m0.772s
+
+Thread-0    (ID  14) searching               0 to      41,666,666
+Thread-11   (ID  25) searching     458,333,326 to     499,999,992
+Thread-10   (ID  24) searching     416,666,660 to     458,333,326
+Thread-9    (ID  23) searching     374,999,994 to     416,666,660
+Thread-8    (ID  22) searching     333,333,328 to     374,999,994
+Thread-7    (ID  21) searching     291,666,662 to     333,333,328
+Thread-6    (ID  20) searching     249,999,996 to     291,666,662
+Thread-5    (ID  19) searching     208,333,330 to     249,999,996
+Thread-4    (ID  18) searching     166,666,664 to     208,333,330
+Thread-3    (ID  17) searching     124,999,998 to     166,666,664
+Thread-2    (ID  16) searching      83,333,332 to     124,999,998
+Thread-1    (ID  15) searching      41,666,666 to      83,333,332
+Best word "NETWORKING'S DEBBIE" has hashCode 4
+
+real	0m13.199s
+user	1m31.343s
+sys	0m0.934s
+
+Thread-0    (ID  14) searching               0 to      38,461,538
+Thread-12   (ID  26) searching     461,538,456 to     499,999,994
+Thread-11   (ID  25) searching     423,076,918 to     461,538,456
+Thread-10   (ID  24) searching     384,615,380 to     423,076,918
+Thread-9    (ID  23) searching     346,153,842 to     384,615,380
+Thread-8    (ID  22) searching     307,692,304 to     346,153,842
+Thread-7    (ID  21) searching     269,230,766 to     307,692,304
+Thread-6    (ID  20) searching     230,769,228 to     269,230,766
+Thread-5    (ID  19) searching     192,307,690 to     230,769,228
+Thread-4    (ID  18) searching     153,846,152 to     192,307,690
+Thread-3    (ID  17) searching     115,384,614 to     153,846,152
+Thread-2    (ID  16) searching      76,923,076 to     115,384,614
+Thread-1    (ID  15) searching      38,461,538 to      76,923,076
+Best word "NETWORKING'S DEBBIE" has hashCode 4
+
+real	0m13.666s
+user	1m32.640s
+sys	0m1.012s
+
+Thread-0    (ID  14) searching               0 to      35,714,285
+Thread-13   (ID  27) searching     464,285,705 to     499,999,990
+Thread-12   (ID  26) searching     428,571,420 to     464,285,705
+Thread-11   (ID  25) searching     392,857,135 to     428,571,420
+Thread-10   (ID  24) searching     357,142,850 to     392,857,135
+Thread-9    (ID  23) searching     321,428,565 to     357,142,850
+Thread-8    (ID  22) searching     285,714,280 to     321,428,565
+Thread-7    (ID  21) searching     249,999,995 to     285,714,280
+Thread-5    (ID  19) searching     178,571,425 to     214,285,710
+Thread-6    (ID  20) searching     214,285,710 to     249,999,995
+Thread-4    (ID  18) searching     142,857,140 to     178,571,425
+Thread-3    (ID  17) searching     107,142,855 to     142,857,140
+Thread-2    (ID  16) searching      71,428,570 to     107,142,855
+Thread-1    (ID  15) searching      35,714,285 to      71,428,570
+Best word "NETWORKING'S DEBBIE" has hashCode 4
+
+real	0m14.065s
+user	1m33.182s
+sys	0m1.202s
+
+Thread-0    (ID  14) searching               0 to      33,333,333
+Thread-14   (ID  28) searching     466,666,662 to     499,999,995
+Thread-13   (ID  27) searching     433,333,329 to     466,666,662
+Thread-12   (ID  26) searching     399,999,996 to     433,333,329
+Thread-11   (ID  25) searching     366,666,663 to     399,999,996
+Thread-10   (ID  24) searching     333,333,330 to     366,666,663
+Thread-9    (ID  23) searching     299,999,997 to     333,333,330
+Thread-8    (ID  22) searching     266,666,664 to     299,999,997
+Thread-7    (ID  21) searching     233,333,331 to     266,666,664
+Thread-6    (ID  20) searching     199,999,998 to     233,333,331
+Thread-5    (ID  19) searching     166,666,665 to     199,999,998
+Thread-4    (ID  18) searching     133,333,332 to     166,666,665
+Thread-3    (ID  17) searching      99,999,999 to     133,333,332
+Thread-2    (ID  16) searching      66,666,666 to      99,999,999
+Thread-1    (ID  15) searching      33,333,333 to      66,666,666
+Best word "NETWORKING'S DEBBIE" has hashCode 4
+
+real	0m13.946s
+user	1m34.875s
+sys	0m1.373s
+
+Thread-0    (ID  14) searching               0 to      31,250,000
+Thread-15   (ID  29) searching     468,750,000 to     500,000,000
+Thread-14   (ID  28) searching     437,500,000 to     468,750,000
+Thread-13   (ID  27) searching     406,250,000 to     437,500,000
+Thread-12   (ID  26) searching     375,000,000 to     406,250,000
+Thread-11   (ID  25) searching     343,750,000 to     375,000,000
+Thread-10   (ID  24) searching     312,500,000 to     343,750,000
+Thread-9    (ID  23) searching     281,250,000 to     312,500,000
+Thread-8    (ID  22) searching     250,000,000 to     281,250,000
+Thread-7    (ID  21) searching     218,750,000 to     250,000,000
+Thread-4    (ID  18) searching     125,000,000 to     156,250,000
+Thread-6    (ID  20) searching     187,500,000 to     218,750,000
+Thread-5    (ID  19) searching     156,250,000 to     187,500,000
+Thread-3    (ID  17) searching      93,750,000 to     125,000,000
+Thread-2    (ID  16) searching      62,500,000 to      93,750,000
+Thread-1    (ID  15) searching      31,250,000 to      62,500,000
+Best word "NETWORKING'S DEBBIE" has hashCode 4
+
+real	0m12.912s
+user	1m29.328s
+sys	0m1.106s
+
+
+
+
+
+QUESTION 3: Does adding more threads continue to speed up the program? Do more threads ever slow down the program slightly?  Why or why not?
+= Adding more threads tends to increase the speed of the program util the thread is of same number compare to the core of the device.
+The speed of the program optimezed when the thread equals to the core of the device. More threads when the treads is more that that 
+of the core of CPU it slows down.  This is because of queuing of the thread in the CPU.
+
+
+
+QUESTION 4: Does adding more threads increase the "system load", or is it constant regardless of the number of threads?  Why?
+
+= Yes adding more thread increases system load as number of individual threads are running independly at the same time.
+
+
+BONUS
+=====
+
+QUESTION 5: Time your thread pool version of FindMinHash as you did for the full credit version. Is a thread pool faster, slower, or roughly equivalent in performance? 
+
+
+YOUR Timing:
+
+
+
+
+QUESTION 6: Compare the full credit and bonus solutions. Which do you believe is more supportable over a long lifetime of evolving hardware and environments?
+
+
+
